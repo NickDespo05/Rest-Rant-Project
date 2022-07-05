@@ -4,6 +4,10 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 
+// app.set("views", __dirname + "./views");
+app.set("view engine", "jsx");
+app.engine("jsx", require("express-react-views").createEngine());
+
 app.use("/places", require("./controllers/places"));
 //what we did above was link the 2 files of places.js and index.js together and gave it a path to do so
 //which ^^^ right above you can see is /places
@@ -12,7 +16,7 @@ app.use("/places", require("./controllers/places"));
 //this is made possible by setting up the router in places.js
 
 app.get("/", (req, res) => {
-    res.send("Hello World");
+    res.render(`./home`);
 });
 
 app.get("*", (req, res) => {
