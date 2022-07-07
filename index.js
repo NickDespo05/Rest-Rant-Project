@@ -9,6 +9,7 @@ app.set("view engine", "jsx");
 app.engine("jsx", require("express-react-views").createEngine());
 
 app.use("/places", require("./controllers/places"));
+app.use(express.static("public"));
 //what we did above was link the 2 files of places.js and index.js together and gave it a path to do so
 //which ^^^ right above you can see is /places
 
