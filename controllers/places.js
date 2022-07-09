@@ -26,4 +26,9 @@ router.get("/:arrayIndex", (req, res) => {
     res.render(`places/index`, { places });
 });
 
+router.post("/", (req, res) => {
+    console.log(req.body);
+    res.send("POST /places");
+});
+
 module.exports = router;

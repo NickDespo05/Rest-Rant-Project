@@ -54,7 +54,11 @@ function New() {
                             required
                         />
                     </div>
-                    <input type="submit" value="Add Place" />
+                    <input
+                        className="btn btn-primary"
+                        type="submit"
+                        value="Add Place"
+                    />
                 </form>
             </main>
         </Def>
