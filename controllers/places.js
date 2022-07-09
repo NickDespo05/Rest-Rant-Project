@@ -10,6 +10,7 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", (req, res) => {
+    //these are all default valuse for each object
     if (!req.body.pic) {
         req.body.pic = "http://placekitten.come/400/400/";
     }
@@ -21,7 +22,7 @@ router.post("/", (req, res) => {
     }
     places.push(req.body);
     console.log(req.body);
-    res.redirect(" /places");
+    res.redirect("/places");
 });
 
 module.exports = router;
