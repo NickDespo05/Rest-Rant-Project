@@ -9,6 +9,17 @@ router.get("/", (req, res) => {
     res.render(`places/index`, { places });
 });
 
+router.get("/:id", (req, res) => {
+    let id = Number(req.params.id);
+    if (isNaN(id)) {
+        res.render("errorpage");
+    } else if (!places[id]) {
+        res.render("errorpage");
+    } else {
+        res.render(`places/show`, { place: places[id] });
+    }
+});
+
 router.post("/", (req, res) => {
     //these are all default valuse for each object
     if (!req.body.pic) {
