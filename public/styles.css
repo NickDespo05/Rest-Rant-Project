@@ -34,3 +34,7 @@ main {
     margin-left: 20px;
     background-color: white;
 }
+.bread-content {
+    display: inline;
+    margin: 10%;
+}
