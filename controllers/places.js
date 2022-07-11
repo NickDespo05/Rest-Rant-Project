@@ -20,10 +20,27 @@ router.get("/:id", (req, res) => {
     }
 });
 
+router.get("/:id/edit", (req, res) => {
+    let id = Number(req.params.id);
+    if (isNaN(id)) {
+        res.render("errorpage");
+    } else if (!places[id]) {
+        res.render("errorpage");
+    } else {
+        res.render(`places/edit_form`, { place: places[id], id });
+    }
+});
+router.put("/:id", (req, res) => {
+    //make sure not to put the edit page on there
+    places[req.params.id] = req.body;
+    console.log(req.body);
+    res.redirect("/places");
+});
+
 router.post("/", (req, res) => {
     //these are all default valuse for each object
     if (!req.body.pic) {
-        req.body.pic = "http://placekitten.come/400/400/";
+        req.body.pic = "http://placekitten.com/400/400/";
     }
     if (!req.body.city) {
         req.body.city = "Anytown";
@@ -32,12 +49,11 @@ router.post("/", (req, res) => {
         req.body.state = "MERICA BABY! (with southern accent)";
     }
     places.push(req.body);
-    console.log(req.body);
     res.redirect("/places");
 });
 
 router.delete("/places/:id", (req, res) => {
-    let id = req.params.id;
+    let id = Number(req.params.id);
     if (isNaN(id)) {
         res.render("errorpage");
     } else if (!places[id]) {
@@ -46,6 +62,7 @@ router.delete("/places/:id", (req, res) => {
         places.splice(places[id], 1);
         res.redirect("/places");
     }
+    console.log(req.body);
 });
 
 module.exports = router;

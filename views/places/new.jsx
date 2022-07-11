@@ -66,3 +66,5 @@ function New() {
 }
 
 module.exports = New;
+
+/**the name and id of each form tells the program what part of the new object this is when the post is submited**/

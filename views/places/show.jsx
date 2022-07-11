@@ -12,12 +12,12 @@ function show(data) {
                     <h2 className="bread-content">Description</h2>
                     <h2 className="bread-content">Comments</h2>
                 </div>
-                <a href={`/places.${data.id}/edit`} className="btn btn-warning">
+                <a href={`/places/${data.id}/edit`} className="btn btn-warning">
                     Edit
                 </a>
                 <form
                     method="POST"
-                    action={`/places.${data.id}?_method=DELETE`}
+                    action={`/places/${data.id}?_method=DELETE`}
                 >
                     <button type="submit" className="btn btn-danger">
                         Delete
