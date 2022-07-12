@@ -31,10 +31,27 @@ router.get("/:id/edit", (req, res) => {
     }
 });
 router.put("/:id", (req, res) => {
-    //make sure not to put the edit page on there
-    places[req.params.id] = req.body;
-    console.log(req.body);
-    res.redirect("/places");
+    let id = Number(req.params.id);
+    if (isNaN(id)) {
+        res.render("error404");
+    } else if (!places[id]) {
+        res.render("error404");
+    } else {
+        // Check validity of values entered by user
+        if (!req.body.pic) {
+            req.body.pic = "http://placekitten.com/400/400";
+        }
+        if (!req.body.city) {
+            req.body.city = "Anytown";
+        }
+        if (!req.body.state) {
+            req.body.state = "USA";
+        }
+
+        // Save the new data
+        places[req.params.id] = req.body;
+        res.redirect(`/places`);
+    }
 });
 
 router.post("/", (req, res) => {
