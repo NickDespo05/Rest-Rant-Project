@@ -54,6 +54,15 @@ function New() {
                             required
                         />
                     </div>
+                    <div className="form-group">
+                        <label htmlFor="founded">Founded Year</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="founded"
+                            name="founded"
+                        />
+                    </div>
                     <input
                         className="btn btn-primary"
                         type="submit"

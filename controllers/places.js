@@ -1,85 +1,62 @@
 const router = require("express").Router();
-const places = require("../modules/places");
+const db = require("../models");
 
 router.get("/new", (req, res) => {
-    res.render(`places/new`);
+    res.render("places/new");
 });
-
 router.get("/", (req, res) => {
-    res.render(`places/index`, { places });
-});
+    db.Place.find()
+        .then((places) => {
+            res.render("places/index", { places });
+        })
+        .catch((err) => {
+            console.log(err);
+            res.render("errorpage");
+        });
+}); //running the mongodb command .find() rather than haveing to use sql
+//this is mongoose at work, it allows us to use these same commands that we used in
+//mongoDB to create collections find documents etc... but all from our code directly
 
 router.get("/:id", (req, res) => {
-    let id = Number(req.params.id);
-    if (isNaN(id)) {
-        res.render("errorpage");
-    } else if (!places[id]) {
-        res.render("errorpage");
-    } else {
-        res.render(`places/show`, { place: places[id], id });
-    }
+    db.Place.findById(req.params.id)
+        .then((place) => {
+            res.render("places/show", { place });
+        })
+        .catch((err) => {
+            console.log("err", err);
+            res.render("errorpage");
+        });
 });
 
 router.get("/:id/edit", (req, res) => {
-    let id = Number(req.params.id);
-    if (isNaN(id)) {
-        res.render("errorpage");
-    } else if (!places[id]) {
-        res.render("errorpage");
-    } else {
-        res.render(`places/edit_form`, { place: places[id], id });
-    }
+    res.send("GET edit form stub");
 });
-router.put("/:id", (req, res) => {
-    let id = Number(req.params.id);
-    if (isNaN(id)) {
-        res.render("error404");
-    } else if (!places[id]) {
-        res.render("error404");
-    } else {
-        // Check validity of values entered by user
-        if (!req.body.pic) {
-            req.body.pic = "http://placekitten.com/400/400";
-        }
-        if (!req.body.city) {
-            req.body.city = "Anytown";
-        }
-        if (!req.body.state) {
-            req.body.state = "USA";
-        }
 
-        // Save the new data
-        places[req.params.id] = req.body;
-        res.redirect(`/places`);
-    }
+router.put("/:id", (req, res) => {
+    res.send("PUT /places/:id stub");
 });
 
 router.post("/", (req, res) => {
-    //these are all default valuse for each object
-    if (!req.body.pic) {
-        req.body.pic = "http://placekitten.com/400/400/";
-    }
-    if (!req.body.city) {
-        req.body.city = "Anytown";
-    }
-    if (!req.body.state) {
-        req.body.state = "MERICA BABY! (with southern accent)";
-    }
-    places.push(req.body);
-    res.redirect("/places");
+    db.Place.create(req.body)
+        .then(() => {
+            res.redirect("/places");
+        })
+        .catch((err) => {
+            console.log("err", err);
+            res.render("errorpage");
+        });
+});
+
+router.post("/:id/rant", (req, res) => {
+    res.send("GET /places/:id/rant stub");
+});
+
+router.delete("/:id/rant/:rantID", (req, res) => {
+    res.send("GET /place/:id/rant/:rantID stub");
 });
 
 router.delete("/places/:id", (req, res) => {
-    let id = Number(req.params.id);
-    if (isNaN(id)) {
-        res.render("errorpage");
-    } else if (!places[id]) {
-        res.render("errorpage");
-    } else {
-        places.splice(places[id], 1);
-        res.redirect("/places");
-    }
-    console.log(req.body);
+    res.send("DELETE places/:id stub");
 });
 
 module.exports = router;

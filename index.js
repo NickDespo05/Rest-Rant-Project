@@ -4,6 +4,7 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const methodOverride = require("method-override");
+const mongoose = require("mongoose");
 
 // app.set("views", __dirname + "./views");
 //middleware or settings
@@ -13,6 +14,7 @@ app.use(methodOverride("_method"));
 app.use(express.urlencoded({ extended: true }));
 app.use("/places", require("./controllers/places"));
 app.use(express.static("public"));
+
 //what we did above was link the 2 files of places.js and index.js together and gave it a path to do so
 //which ^^^ right above you can see is /places
 
