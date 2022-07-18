@@ -57,10 +57,11 @@ function New() {
                     <div className="form-group">
                         <label htmlFor="founded">Founded Year</label>
                         <input
-                            type="text"
+                            type="number"
                             className="form-control"
                             id="founded"
                             name="founded"
+                            value={new Date().getFullYear()}
                         />
                     </div>
                     <input

@@ -42,8 +42,7 @@ router.post("/", (req, res) => {
             res.redirect("/places");
         })
         .catch((err) => {
-            console.log("err", err);
-            res.render("errorpage");
+            console.log("error" + err);
         });
 });
 
