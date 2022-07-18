@@ -1,6 +1,8 @@
+require("dotenv");
 const mongoose = require("mongoose");
 
-mongoose.connect(process.env.MONGO_URI, {
+//prettier-ignore
+mongoose.connect("mongodb://localhost:27017/rest-rant", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
