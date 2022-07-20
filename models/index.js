@@ -8,3 +8,4 @@ mongoose.connect("mongodb://localhost:27017/rest-rant", {
 });
 
 module.exports.Place = require("./places"); //this is defining where we will get the schema from
+module.exports.Comment = require("./comment");
