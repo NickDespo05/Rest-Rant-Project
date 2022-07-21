@@ -22,7 +22,7 @@ router.get("/:id", (req, res) => {
         .populate("comments")
         .then((place) => {
             res.render("places/show", { place });
-            console.log(place.comments);
+            console.log(place.id);
         })
         .catch((err) => {
             console.log("err", err);
@@ -31,7 +31,14 @@ router.get("/:id", (req, res) => {
 });
 
 router.get("/:id/edit", (req, res) => {
-    res.send("GET edit form stub");
+    db.Place.findById(req.params.id)
+        .then((place) => {
+            res.render(`places/edit_form`, { place });
+        })
+        .catch((err) => {
+            console.log("Edit Error", err);
+            res.render("errorpage");
+        });
 });
 
 router.get("/:id/comment", (req, res) => {
@@ -47,7 +54,14 @@ router.get("/:id/comment", (req, res) => {
 });
 
 router.put("/:id", (req, res) => {
-    res.send("PUT /places/:id stub");
+    db.Place.dindByIdAndUpdate(req.params.id)
+        .then(() => {
+            res.redirect(`/place/${req.params.id}`);
+        })
+        .catch((err) => {
+            console.log("Put Error ", err);
+            res.redirect("errorpage");
+        });
 });
 
 router.post("/", (req, res) => {
@@ -83,12 +97,18 @@ router.post("/:id/comment", (req, res) => {
         });
 });
 
-router.delete("/:id/comment/:rantID", (req, res) => {
-    res.send("GET /place/:id/rant/:rantID stub");
+router.delete("/:id", (req, res) => {
+    var id = req.params.id;
+    db.Place.findByIdAndDelete(id)
+        .then(() => {
+            res.redirect("/places");
+        })
+        .catch((err) => {
+            console.log("error ", err);
+            res.render("errorpage");
+        });
 });
 
-router.delete("/places/:id", (req, res) => {
-    res.send("DELETE places/:id stub");
-});
+router.delete("/:id/comment/:rantID", (req, res) => {});
 
 module.exports = router;
